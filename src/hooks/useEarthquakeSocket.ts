@@ -47,7 +47,12 @@ export const useEarthquakeSocket = () => {
         time: props.time,
       };
 
-      setEarthquakes((prev) => [earthquake, ...prev].slice(0, 100));
+      setEarthquakes((prev) =>
+        [earthquake, ...prev.filter((eq) => eq.id !== earthquake.id)].slice(
+          0,
+          100,
+        ),
+      );
     };
 
     socket.onclose = () => {
