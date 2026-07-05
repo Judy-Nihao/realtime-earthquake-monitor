@@ -38,6 +38,22 @@ type GlobeProps = {
   onSelectEarthquake: (earthquake: Earthquake) => void;
 };
 
+const PoleStickers = () => {
+  return (
+    <group>
+      <mesh position={[0, 2.02, 0]}>
+        <octahedronGeometry args={[0.095, 0]} />
+        <meshBasicMaterial color="#ef4444" />
+      </mesh>
+
+      <mesh position={[0, -2.02, 0]}>
+        <octahedronGeometry args={[0.095, 0]} />
+        <meshBasicMaterial color="#2563eb" />
+      </mesh>
+    </group>
+  );
+};
+
 // 一筆 earthquake 會被畫成地球表面上的一顆小球。
 const Marker = ({ earthquake, isSelected, onSelect }: MarkerProps) => {
   const markerRef = useRef<Mesh | null>(null);
@@ -122,6 +138,8 @@ export const Globe = ({
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial wireframe />
       </mesh>
+
+      <PoleStickers />
 
       {/* earthquakes 有幾筆，就畫幾個 Marker。key 用 id，幫 React 辨識每個 marker。 */}
       {earthquakes.map((eq) => (
