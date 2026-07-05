@@ -1,0 +1,19 @@
+.shell {
+  display: flex;
+  height: 100vh;
+}
+
+.globeStage {
+  flex: 1;
+  min-width: 0;
+}
+
+.panel {
+  width: 360px;
+  padding: 16px;
+  overflow: auto;
+}
+
+.eventItem {
+  margin-bottom: 12px;
+}
