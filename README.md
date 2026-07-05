@@ -1,4 +1,4 @@
-# Realtime Earthquake Globe
+# Realtime Earthquake Globe Monitor
 
 An MVP (Minimum Viable Product) for exploring realtime data flow and 3D
 visualization in React.
