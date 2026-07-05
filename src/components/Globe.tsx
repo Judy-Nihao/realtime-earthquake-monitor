@@ -19,6 +19,14 @@ const latLonToVector3 = (lat: number, lon: number, radius = 2) => {
   return [x, y, z] as const;
 };
 
+// 用地震深度決定 marker 顏色。
+// 淺層地震用黃色，中層用橘色，深層用紅色，讓 depth 也能被視覺化。
+const getDepthColor = (depth: number) => {
+  if (depth < 30) return "#facc15";
+  if (depth < 100) return "#fb923c";
+  return "#ef4444";
+};
+
 // 一筆 earthquake 會被畫成地球表面上的一顆小球。
 const Marker = ({ earthquake }: { earthquake: Earthquake }) => {
   // 地球本體半徑是 2，marker 用 2.05，讓它稍微浮在地球表面外面。
@@ -27,13 +35,16 @@ const Marker = ({ earthquake }: { earthquake: Earthquake }) => {
   // 用地震規模決定 marker 大小；Math.max 確保規模太小時也看得到。
   const size = Math.max(0.03, earthquake.mag * 0.015);
 
+  // 用地震深度決定 marker 顏色，讓深度差異不只存在文字列表裡。
+  const color = getDepthColor(earthquake.depth);
+
   return (
     // mesh 是 Three.js 裡的一個可見 3D 物件，position 決定它放在哪裡。
     <mesh position={position}>
       {/* sphereGeometry 代表這個 marker 的形狀是一顆小球。 */}
       <sphereGeometry args={[size, 16, 16]} />
-      {/* material 決定物件外觀。MVP 先用預設材質即可。 */}
-      <meshStandardMaterial />
+      {/* material 決定物件外觀，這裡把 depth 對應到 marker color。 */}
+      <meshStandardMaterial color={color} />
     </mesh>
   );
 };
