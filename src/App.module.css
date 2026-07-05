@@ -28,6 +28,12 @@
   background: #f8fafc;
 }
 
+.selectedCard {
+  border-color: var(--selected-depth-color);
+  box-shadow: 0 8px 24px
+    color-mix(in srgb, var(--selected-depth-color) 24%, transparent);
+}
+
 /* Let Mantine ScrollArea own the scrolling instead of the whole page. */
 .eventScroll {
   flex: 1;

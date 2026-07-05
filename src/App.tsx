@@ -13,6 +13,7 @@ import {
   type Earthquake,
 } from "./hooks/useEarthquakeSocket";
 import { Globe } from "./components/Globe";
+import { getDepthColor } from "./utils/earthquakeVisuals";
 import styles from "./App.module.css";
 
 export const App = () => {
@@ -48,7 +49,19 @@ export const App = () => {
           </Group>
         </Card>
 
-        <Card withBorder radius="md" padding="md">
+        <Card
+          withBorder
+          radius="md"
+          padding="md"
+          className={styles.selectedCard}
+          style={
+            {
+              "--selected-depth-color": selectedEarthquake
+                ? getDepthColor(selectedEarthquake.depth)
+                : "#ced4da",
+            } as React.CSSProperties
+          }
+        >
           <Stack gap="xs">
             <Text size="sm" fw={700} tt="uppercase" c="dimmed">
               Selected earthquake

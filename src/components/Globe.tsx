@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Color, NoToneMapping, type Mesh } from "three";
 import type { Earthquake } from "../hooks/useEarthquakeSocket";
+import { getDepthColor } from "../utils/earthquakeVisuals";
 
 // 把地震資料的經緯度轉成 Three.js 3D 世界裡的 x/y/z 座標。
 // 地震 API 給的是 lat/lon，但 3D marker 需要的是 position: [x, y, z]。
@@ -19,14 +20,6 @@ const latLonToVector3 = (lat: number, lon: number, radius = 2) => {
 
   // 回傳固定三個數字的 tuple，剛好可以給 Three.js 的 position 使用。
   return [x, y, z] as const;
-};
-
-// 用地震深度決定 marker 顏色。
-// 淺層地震用黃色，中層用橘色，深層用紅色，讓 depth 也能被視覺化。
-const getDepthColor = (depth: number) => {
-  if (depth < 30) return "#facc15";
-  if (depth < 100) return "#fb923c";
-  return "#ef4444";
 };
 
 // 選取時不要換成別的色系，而是在原本 depth color 基礎上變深。
