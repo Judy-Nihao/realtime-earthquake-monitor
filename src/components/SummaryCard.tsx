@@ -22,7 +22,7 @@ export const SummaryCard = ({ status }: SummaryCardProps) => {
           </Text>
         </div>
 
-        <Badge variant="light" color="green">
+        <Badge variant="light" color={status === "connected" ? "green" : "gray"}>
           {status}
         </Badge>
       </Group>
