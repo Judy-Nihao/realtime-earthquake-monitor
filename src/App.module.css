@@ -56,7 +56,7 @@
 @media (max-width: 768px) {
   .shell {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 62vh) minmax(260px, 38vh);
+    grid-template-rows: minmax(0, 44vh) minmax(360px, 56vh);
   }
 
   .globeStage {
