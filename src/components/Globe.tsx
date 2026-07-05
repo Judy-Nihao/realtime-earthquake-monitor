@@ -1,6 +1,7 @@
-import { Canvas } from "@react-three/fiber";
+import { useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { NoToneMapping } from "three";
+import { Color, NoToneMapping, type Mesh } from "three";
 import type { Earthquake } from "../hooks/useEarthquakeSocket";
 
 // 把地震資料的經緯度轉成 Three.js 3D 世界裡的 x/y/z 座標。
@@ -28,6 +29,10 @@ const getDepthColor = (depth: number) => {
   return "#ef4444";
 };
 
+// 選取時不要換成別的色系，而是在原本 depth color 基礎上變深。
+const darkenColor = (color: string) =>
+  `#${new Color(color).multiplyScalar(0.62).getHexString()}`;
+
 type MarkerProps = {
   earthquake: Earthquake;
   isSelected: boolean;
@@ -42,6 +47,9 @@ type GlobeProps = {
 
 // 一筆 earthquake 會被畫成地球表面上的一顆小球。
 const Marker = ({ earthquake, isSelected, onSelect }: MarkerProps) => {
+  const markerRef = useRef<Mesh | null>(null);
+  const bounceProgressRef = useRef(0);
+
   // 地球本體半徑是 2，marker 用 2.05，讓它稍微浮在地球表面外面。
   const position = latLonToVector3(earthquake.lat, earthquake.lon, 2.05);
 
@@ -51,27 +59,36 @@ const Marker = ({ earthquake, isSelected, onSelect }: MarkerProps) => {
 
   // 用地震深度決定 marker 顏色，讓深度差異不只存在文字列表裡。
   const color = getDepthColor(earthquake.depth);
+  const markerColor = isSelected ? darkenColor(color) : color;
+
+  useFrame((_, delta) => {
+    if (!markerRef.current) return;
+
+    if (bounceProgressRef.current > 0) {
+      bounceProgressRef.current = Math.max(
+        0,
+        bounceProgressRef.current - delta * 4,
+      );
+    }
+
+    const bounceScale =
+      bounceProgressRef.current > 0
+        ? Math.sin(bounceProgressRef.current * Math.PI) * 0.45
+        : 0;
+
+    markerRef.current.scale.setScalar(markerScale + bounceScale);
+  });
 
   return (
     <group position={position}>
-      {isSelected && (
-        <mesh scale={1.9}>
-          <sphereGeometry args={[size, 24, 24]} />
-          <meshBasicMaterial
-            color="#ffffff"
-            transparent
-            opacity={0.28}
-            depthWrite={false}
-          />
-        </mesh>
-      )}
-
       {/* mesh 是 Three.js 裡的一個可見 3D 物件，position 決定它放在哪裡。 */}
       <mesh
+        ref={markerRef}
         scale={markerScale}
         onClick={(event) => {
           // 點 marker 時只選取這顆 marker，不把 click 事件繼續往外傳。
           event.stopPropagation();
+          bounceProgressRef.current = 1;
           onSelect(earthquake);
         }}
         onPointerOver={() => {
@@ -84,7 +101,7 @@ const Marker = ({ earthquake, isSelected, onSelect }: MarkerProps) => {
         {/* sphereGeometry 代表這個 marker 的形狀是一顆小球。 */}
         <sphereGeometry args={[size, 16, 16]} />
         {/* material 決定物件外觀，這裡把 depth 對應到 marker color。 */}
-        <meshBasicMaterial color={color} />
+        <meshBasicMaterial color={markerColor} />
       </mesh>
     </group>
   );
