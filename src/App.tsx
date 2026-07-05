@@ -25,6 +25,7 @@ export const App = () => {
       <div className={styles.globeStage}>
         <Globe
           earthquakes={earthquakes}
+          selectedEarthquakeId={selectedEarthquake?.id ?? null}
           onSelectEarthquake={setSelectedEarthquake}
         />
       </div>
