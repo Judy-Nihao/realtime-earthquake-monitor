@@ -89,6 +89,8 @@ The socket hook handles the basic realtime lifecycle:
 This helps the visualization recover from temporary network interruptions
 instead of silently stopping after a socket disconnect.
 
+Because the realtime stream may not send an event immediately after connection, the latest-events panel shows a waiting state while the list is empty. Once the first valid earthquake event arrives, the waiting message is replaced by the live event list.
+
 ## Run Locally
 
 ```bash
