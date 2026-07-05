@@ -29,6 +29,13 @@ export type SocketStatus = "connecting" | "connected" | "reconnecting";
 
 const RECONNECT_DELAY_MS = 3000;
 
+const toFiniteNumber = (value: unknown) => {
+  const numberValue =
+    typeof value === "number" ? value : Number.parseFloat(String(value));
+
+  return Number.isFinite(numberValue) ? numberValue : null;
+};
+
 // 這是一個 custom hook，負責處理「即時地震資料」這件事。
 // App.tsx 只要呼叫它，就可以拿到 earthquakes 和目前連線 status。
 export const useEarthquakeSocket = () => {
@@ -72,18 +79,38 @@ export const useEarthquakeSocket = () => {
         const coords = message.data?.geometry?.coordinates;
 
         // 如果這筆資料缺少 properties 或 coordinates，就先跳過，避免後面讀資料時報錯。
-        if (!props || !coords) return;
+        if (!props || !Array.isArray(coords)) return;
+
+        const lon = toFiniteNumber(coords[0]);
+        const lat = toFiniteNumber(coords[1]);
+        const depth = toFiniteNumber(props.depth);
+        const mag = toFiniteNumber(props.mag);
+        const id = typeof props.unid === "string" ? props.unid : null;
+
+        if (
+          !id ||
+          lon === null ||
+          lat === null ||
+          depth === null ||
+          mag === null ||
+          lat < -90 ||
+          lat > 90 ||
+          lon < -180 ||
+          lon > 180
+        ) {
+          return;
+        }
 
         // 把外部 API 的原始資料整理成我們自己的 Earthquake 格式。
         // 注意 GeoJSON 座標通常是 lon 在前、lat 在後，所以 coords[0] 是經度，coords[1] 是緯度。
         const earthquake: Earthquake = {
-          id: props.unid,
-          lon: coords[0],
-          lat: coords[1],
-          depth: props.depth,
-          mag: props.mag,
-          region: props.flynn_region,
-          time: props.time,
+          id,
+          lon,
+          lat,
+          depth,
+          mag,
+          region: String(props.flynn_region ?? "Unknown region"),
+          time: String(props.time ?? "Unknown time"),
         };
 
         // 把最新地震放到列表最前面。

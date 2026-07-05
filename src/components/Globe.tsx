@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Text } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Color, NoToneMapping, type Mesh } from "three";
 import type { Earthquake } from "../hooks/useEarthquakeSocket";
 import { getDepthColor } from "../utils/earthquakeVisuals";
@@ -36,30 +36,6 @@ type GlobeProps = {
   earthquakes: Earthquake[];
   selectedEarthquakeId: string | null;
   onSelectEarthquake: (earthquake: Earthquake) => void;
-};
-
-// 簡單標示南北極，旋轉地球時比較容易判斷上下方向。
-const PoleLabels = () => {
-  return (
-    <>
-      <Text
-        position={[0, 2.28, 0]}
-        fontSize={0.22}
-        color="#ef4444"
-        anchorX="center"
-      >
-        N
-      </Text>
-      <Text
-        position={[0, -2.28, 0]}
-        fontSize={0.22}
-        color="#2563eb"
-        anchorX="center"
-      >
-        S
-      </Text>
-    </>
-  );
 };
 
 // 一筆 earthquake 會被畫成地球表面上的一顆小球。
@@ -146,8 +122,6 @@ export const Globe = ({
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial wireframe />
       </mesh>
-
-      <PoleLabels />
 
       {/* earthquakes 有幾筆，就畫幾個 Marker。key 用 id，幫 React 辨識每個 marker。 */}
       {earthquakes.map((eq) => (
