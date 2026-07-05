@@ -9,9 +9,9 @@ The app listens to live earthquake events, normalizes each message into a clean
 這是一個用 React 練習即時資料流與 3D 視覺化的 MVP（最小可行版本）。它會接收即時地震事件，
 整理成前端好使用的資料格式，再把每筆事件畫成 3D 地球上的標記點。
 
-## Live Demo
+## 🚀 Live Demo
 
-🚀 https://judy-nihao.github.io/realtime-earthquake-monitor/
+https://judy-nihao.github.io/realtime-earthquake-monitor/
 
 <img width="1821" height="999" alt="截圖 2026-07-05 晚上11 31 31" src="https://github.com/user-attachments/assets/cdd501e2-83a3-4c8c-b3dd-a10ea447b13b" />
 
