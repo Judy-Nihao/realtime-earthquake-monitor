@@ -15,6 +15,10 @@ https://judy-nihao.github.io/realtime-earthquake-monitor/
 
 <img width="1821" height="999" alt="截圖 2026-07-05 晚上11 31 31" src="https://github.com/user-attachments/assets/cdd501e2-83a3-4c8c-b3dd-a10ea447b13b" />
 
+#### Mobile Screen Recording
+
+<img width="592" height="1280" alt="螢幕錄影-eq-iphone" src="https://github.com/user-attachments/assets/d8df870b-54fa-4e32-b917-5a0b57c6c1a2" />
+
 ## Data Flow
 
 ```text
