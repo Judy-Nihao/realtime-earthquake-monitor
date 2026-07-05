@@ -64,6 +64,12 @@ The normalized `lon` and `lat` are not mapped directly to `x` and `y`. Because
 the globe is a 3D sphere, the app converts them through spherical coordinates
 to calculate the final `[x, y, z]` marker position.
 
+Before an event becomes a marker, the socket hook also validates the fields used
+for rendering. The app only keeps events with a valid `id`, finite `lat`, `lon`,
+`depth`, and `mag` values, and coordinates inside the normal latitude/longitude
+ranges. This prevents incomplete or malformed stream messages from producing
+markers at invalid positions or making multiple events appear stacked together.
+
 ## Realtime Reliability
 
 The socket hook handles the basic realtime lifecycle:
