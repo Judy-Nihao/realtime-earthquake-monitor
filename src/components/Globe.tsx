@@ -44,7 +44,7 @@ const Marker = ({ earthquake }: { earthquake: Earthquake }) => {
       {/* sphereGeometry 代表這個 marker 的形狀是一顆小球。 */}
       <sphereGeometry args={[size, 16, 16]} />
       {/* material 決定物件外觀，這裡把 depth 對應到 marker color。 */}
-      <meshStandardMaterial color={color} />
+      <meshBasicMaterial color={color} />
     </mesh>
   );
 };
