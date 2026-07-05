@@ -13,7 +13,7 @@ import {
   type Earthquake,
 } from "./hooks/useEarthquakeSocket";
 import { Globe } from "./components/Globe";
-import { getDepthColor } from "./utils/earthquakeVisuals";
+import { DEFAULT_DEPTH_COLOR, getDepthColor } from "./utils/earthquakeVisuals";
 import styles from "./App.module.css";
 
 export const App = () => {
@@ -58,7 +58,7 @@ export const App = () => {
             {
               "--selected-depth-color": selectedEarthquake
                 ? getDepthColor(selectedEarthquake.depth)
-                : "#ced4da",
+                : DEFAULT_DEPTH_COLOR,
             } as React.CSSProperties
           }
         >
@@ -79,7 +79,7 @@ export const App = () => {
                     </Text>
                   </div>
 
-                  <Badge variant="light" color="orange">
+                  <Badge variant="light" className={styles.depthBadge}>
                     {selectedEarthquake.depth} km
                   </Badge>
                 </Group>

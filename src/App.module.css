@@ -29,9 +29,20 @@
 }
 
 .selectedCard {
-  border-color: var(--selected-depth-color);
+  border-color: var(--selected-depth-color, #64748b);
   box-shadow: 0 8px 24px
-    color-mix(in srgb, var(--selected-depth-color) 24%, transparent);
+    color-mix(in srgb, var(--selected-depth-color, #64748b) 24%, transparent);
+}
+
+.depthBadge {
+  color: color-mix(in srgb, var(--selected-depth-color, #64748b) 72%, #1f2937);
+  border: 1px solid
+    color-mix(in srgb, var(--selected-depth-color, #64748b) 36%, white);
+  background: color-mix(
+    in srgb,
+    var(--selected-depth-color, #64748b) 16%,
+    white
+  );
 }
 
 /* Let Mantine ScrollArea own the scrolling instead of the whole page. */

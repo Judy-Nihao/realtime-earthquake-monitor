@@ -6,6 +6,8 @@ const DEPTH_COLORS = {
   deep: "#ef4444",
 } as const;
 
+export const DEFAULT_DEPTH_COLOR = "#64748b";
+
 type DepthLevel = keyof typeof DEPTH_COLORS;
 
 export const getDepthLevel = (depth: number): DepthLevel => {
