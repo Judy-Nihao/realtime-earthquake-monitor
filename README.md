@@ -11,7 +11,7 @@ The app listens to live earthquake events, normalizes each message into a clean
 
 ## Live Demo
 
-https://judy-nihao.github.io/realtime-earthquake-monitor/
+🚀 https://judy-nihao.github.io/realtime-earthquake-monitor/
 
 <img width="1821" height="999" alt="截圖 2026-07-05 晚上11 31 31" src="https://github.com/user-attachments/assets/cdd501e2-83a3-4c8c-b3dd-a10ea447b13b" />
 
