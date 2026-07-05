@@ -46,6 +46,9 @@ export const App = () => {
               <Text size="sm" c="dimmed">
                 Live events from Seismic Portal
               </Text>
+              <Text size="xs" c="dimmed" className={styles.controlHint}>
+                Drag to rotate · Scroll to zoom · Right-drag to pan
+              </Text>
             </div>
 
             <Badge variant="light" color="green">

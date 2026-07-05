@@ -45,6 +45,11 @@
   );
 }
 
+.controlHint {
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
 /* Let Mantine ScrollArea own the scrolling instead of the whole page. */
 .eventScroll {
   flex: 1;
@@ -79,6 +84,10 @@
   .summaryCard h2 {
     font-size: 22px;
     line-height: 1.15;
+  }
+
+  .controlHint {
+    margin-top: 6px;
   }
 
   .selectedLabel {
