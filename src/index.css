@@ -1,0 +1,9 @@
+/* Global document reset.
+   These selectors belong to the whole page, not to a single React component. */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
