@@ -64,8 +64,37 @@
   }
 
   .panel {
+    gap: 10px;
     min-height: 0;
+    padding: 10px;
     border-left: 0;
     border-top: 1px solid #e9ecef;
+  }
+
+  .summaryCard,
+  .selectedCard {
+    padding: 12px;
+  }
+
+  .summaryCard h2 {
+    font-size: 22px;
+    line-height: 1.15;
+  }
+
+  .selectedLabel {
+    font-size: 12px;
+  }
+
+  .selectedTitle {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .selectedTime {
+    font-size: 13px;
+  }
+
+  .selectedCoordinates {
+    display: none;
   }
 }

@@ -32,7 +32,12 @@ export const App = () => {
       </div>
 
       <aside className={styles.panel}>
-        <Card withBorder radius="md" padding="md">
+        <Card
+          withBorder
+          radius="md"
+          padding="md"
+          className={styles.summaryCard}
+        >
           <Group justify="space-between" align="center" gap="md">
             <div>
               <Title order={2} size="h3">
@@ -63,7 +68,13 @@ export const App = () => {
           }
         >
           <Stack gap="xs">
-            <Text size="sm" fw={700} tt="uppercase" c="dimmed">
+            <Text
+              size="sm"
+              fw={700}
+              tt="uppercase"
+              c="dimmed"
+              className={styles.selectedLabel}
+            >
               Selected earthquake
             </Text>
 
@@ -71,10 +82,18 @@ export const App = () => {
               <>
                 <Group justify="space-between" align="flex-start" gap="sm">
                   <div>
-                    <Title order={3} size="h4">
+                    <Title
+                      order={3}
+                      size="h4"
+                      className={styles.selectedTitle}
+                    >
                       M{selectedEarthquake.mag} {selectedEarthquake.region}
                     </Title>
-                    <Text size="sm" c="dimmed">
+                    <Text
+                      size="sm"
+                      c="dimmed"
+                      className={styles.selectedTime}
+                    >
                       {selectedEarthquake.time}
                     </Text>
                   </div>
@@ -84,7 +103,7 @@ export const App = () => {
                   </Badge>
                 </Group>
 
-                <Text size="sm">
+                <Text size="sm" className={styles.selectedCoordinates}>
                   Lat/Lon: {selectedEarthquake.lat.toFixed(3)},{" "}
                   {selectedEarthquake.lon.toFixed(3)}
                 </Text>
