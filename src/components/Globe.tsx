@@ -27,8 +27,18 @@ const getDepthColor = (depth: number) => {
   return "#ef4444";
 };
 
+type MarkerProps = {
+  earthquake: Earthquake;
+  onSelect: (earthquake: Earthquake) => void;
+};
+
+type GlobeProps = {
+  earthquakes: Earthquake[];
+  onSelectEarthquake: (earthquake: Earthquake) => void;
+};
+
 // 一筆 earthquake 會被畫成地球表面上的一顆小球。
-const Marker = ({ earthquake }: { earthquake: Earthquake }) => {
+const Marker = ({ earthquake, onSelect }: MarkerProps) => {
   // 地球本體半徑是 2，marker 用 2.05，讓它稍微浮在地球表面外面。
   const position = latLonToVector3(earthquake.lat, earthquake.lon, 2.05);
 
@@ -40,7 +50,14 @@ const Marker = ({ earthquake }: { earthquake: Earthquake }) => {
 
   return (
     // mesh 是 Three.js 裡的一個可見 3D 物件，position 決定它放在哪裡。
-    <mesh position={position}>
+    <mesh
+      position={position}
+      onClick={(event) => {
+        // 點 marker 時只選取這顆 marker，不把 click 事件繼續往外傳。
+        event.stopPropagation();
+        onSelect(earthquake);
+      }}
+    >
       {/* sphereGeometry 代表這個 marker 的形狀是一顆小球。 */}
       <sphereGeometry args={[size, 16, 16]} />
       {/* material 決定物件外觀，這裡把 depth 對應到 marker color。 */}
@@ -50,7 +67,7 @@ const Marker = ({ earthquake }: { earthquake: Earthquake }) => {
 };
 
 // Globe 接收 App 傳進來的 earthquakes，負責畫出 3D 地球和所有地震 marker。
-export const Globe = ({ earthquakes }: { earthquakes: Earthquake[] }) => {
+export const Globe = ({ earthquakes, onSelectEarthquake }: GlobeProps) => {
   return (
     // Canvas 是 React Three Fiber 的 3D 畫布，裡面放的都是 Three.js 場景內容。
     // camera position [0, 0, 5] 代表攝影機在 z 軸前方，能看到半徑 2 的地球。
@@ -67,7 +84,7 @@ export const Globe = ({ earthquakes }: { earthquakes: Earthquake[] }) => {
 
       {/* earthquakes 有幾筆，就畫幾個 Marker。key 用 id，幫 React 辨識每個 marker。 */}
       {earthquakes.map((eq) => (
-        <Marker key={eq.id} earthquake={eq} />
+        <Marker key={eq.id} earthquake={eq} onSelect={onSelectEarthquake} />
       ))}
 
       {/* OrbitControls 讓使用者可以用滑鼠旋轉、縮放、拖曳地球。 */}
