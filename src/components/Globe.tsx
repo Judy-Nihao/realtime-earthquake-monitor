@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Color, NoToneMapping, type Mesh } from "three";
+import { Color, MOUSE, NoToneMapping, TOUCH, type Mesh } from "three";
 import type { Earthquake } from "../hooks/useEarthquakeSocket";
 import { getDepthColor } from "../utils/earthquakeVisuals";
 
@@ -151,8 +151,21 @@ export const Globe = ({
         />
       ))}
 
-      {/* OrbitControls 讓使用者可以用滑鼠旋轉、縮放、拖曳地球。 */}
-      <OrbitControls />
+      {/* OrbitControls 讓使用者可以旋轉、縮放，並用右鍵拖曳平移視角。 */}
+      <OrbitControls
+        enablePan
+        panSpeed={0.75}
+        screenSpacePanning
+        mouseButtons={{
+          LEFT: MOUSE.ROTATE,
+          MIDDLE: MOUSE.DOLLY,
+          RIGHT: MOUSE.PAN,
+        }}
+        touches={{
+          ONE: TOUCH.ROTATE,
+          TWO: TOUCH.DOLLY_PAN,
+        }}
+      />
     </Canvas>
   );
 };
