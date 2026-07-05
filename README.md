@@ -32,12 +32,12 @@ Portal.
 Documentation:
 https://www.seismicportal.eu/realtime.html
 
-SockJS endpoint:
+WebSocket endpoint:
 https://www.seismicportal.eu/standing_order
 
 The documentation page provides a JavaScript SockJS example. The actual app
-connects to the SockJS endpoint and receives realtime earthquake events from
-that stream.
+connects to this endpoint using the SockJS client library and receives
+realtime earthquake events from that stream.
 
 ## Tech Stack
 
